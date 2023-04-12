@@ -43,8 +43,8 @@ displayKanap() //permet le bon fonctionnement de la function
 
 
 
-// function sectionKanap(){
+// function addKanap(){
 //     document.getElementById('addToCart').click();
 //     addEventListener()
 // }
-// sectionKanap()
+// addKanap()
