@@ -4,7 +4,7 @@ fetch("http://localhost:3000/api/products/")
 .then(function(value){
     for(let i = 0; i < value.length; i++){
        document.querySelector(".items").innerHTML +=
-                `<a href="./product.html${value[i]._id}">
+                `<a href="./product.html?id=${value[i]._id}">
                     <article>
                         <img src=${value[i].imageUrl} alt=${value[i].altTxt}>
                         <h3 class="productName">${value[i].name}</h3>
