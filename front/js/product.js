@@ -1,10 +1,9 @@
+// récuperer l'id du canaper selectionner
+let params = new URLSearchParams(document.location.search);
+let id = params.get ("id");
+// console.log(id);
+
 async function displayKanap(){
-        // récuperer l'id du canaper selectionner
-    let params = new URLSearchParams(document.location.search);
-    let id = params.get ("id");
-    console.log(id);
-
-
     await fetch("http://localhost:3000/api/products/"+ id) // intégrer l'id du canaper selectionner dans le fetch "+ id"
     .then(res => res.json())
 
@@ -43,8 +42,17 @@ displayKanap() //permet le bon fonctionnement de la function
 
 
 
-// function addKanap(){
-//     document.getElementById('addToCart').click();
-//     addEventListener()
-// }
-// addKanap()
+function addKanap(){ //Ajoute mes choix (couleur quantiter et prix) dans le localstorage
+    const recupColors = document.getElementById("colors").value; //
+    const recupQuantity = document.getElementById("quantity").value;
+    const recupPrice = document.getElementById("price").value;
+
+    const cardKanap = [id, recupColors, recupQuantity, recupPrice];
+    console.log(cardKanap);
+
+    let cardKanapLinea = JSON.stringify(cardKanap);
+    window.localStorage.setItem("cardKanapLinea", cardKanap);
+    // localStorage.clear();
+    console.log(localStorage);
+}
+addKanap()
