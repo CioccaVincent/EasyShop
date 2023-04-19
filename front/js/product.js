@@ -8,7 +8,7 @@ async function displayKanap(){
     .then(res => res.json())
 
     .then(function(value){
-        console.log(value);
+        // console.log(value);
 
             document.querySelector(".item__img").innerHTML += // affiche l'image stocker dans le models dans le code HTML via la classe
                     `<img src=${value.imageUrl} alt=${value.altTxt}>`;
@@ -43,16 +43,23 @@ displayKanap() //permet le bon fonctionnement de la function
 
 
 function addKanap(){ //Ajoute mes choix (couleur quantiter et prix) dans le localstorage
-    const recupColors = document.getElementById("colors").value; //
+
+    const recupColors = document.getElementById("colors").value; 
     const recupQuantity = document.getElementById("quantity").value;
     const recupPrice = document.getElementById("price").value;
-
-    const cardKanap = [id, recupColors, recupQuantity, recupPrice];
-    console.log(cardKanap);
-
-    let cardKanapLinea = JSON.stringify(cardKanap);
-    window.localStorage.setItem("cardKanapLinea", cardKanap);
+    
+    let arKanap = localStorage.getItem("arKanap");
+    if (arKanap === null){
+        let getKanap = [id, recupColors, recupQuantity, recupPrice];
+        let jsonKanap = JSON.stringify(getKanap);
+        window.localStorage.setItem("arKanap", jsonKanap);
+    }else{
+        let parseKanap = JSON.parse(arKanap);
+        parseKanap.push(id, recupColors, recupQuantity, recupPrice);
+        let jsonParsKanap = JSON.stringify(parseKanap);
+        localStorage.setItem("arKanap", jsonParsKanap);
+    }
     // localStorage.clear();
-    console.log(localStorage);
+    // console.log(localStorage);
 }
 addKanap()
