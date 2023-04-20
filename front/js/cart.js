@@ -35,3 +35,17 @@ function getKanap() {
     
 }
 getKanap()
+
+function contProduct(Products, cleanProducts){
+    let cleanKanapProd = [];
+    for (const cleanProduct of cleanProducts) {
+        let conter = 0;
+        for (const product of Products) {
+            if (cleanProduct.id == Product.id && cleanProduct.colors == Product.colors) {
+                conter ++;
+            }
+            cleanProduct.conter = conter;
+            cleanKanapProd.push(cleanProduct)
+        }
+    }
+}

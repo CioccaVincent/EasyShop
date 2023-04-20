@@ -44,22 +44,37 @@ displayKanap() //permet le bon fonctionnement de la function
 
 function addKanap(){ //Ajoute mes choix (couleur quantiter et prix) dans le localstorage
 
+    let addCart = document.getElementById("addToCart");
+    addCart.addEventListener ("click", function(event){
+        event.preventDefault();
+
     const recupColors = document.getElementById("colors").value; 
     const recupQuantity = document.getElementById("quantity").value;
-    const recupPrice = document.getElementById("price").value;
+    const idProduct = id;
     
     let arKanap = localStorage.getItem("arKanap");
     if (arKanap === null){
-        let getKanap = [id, recupColors, recupQuantity, recupPrice];
+        // let getKanap = [id, recupColors, recupQuantity, recupPrice];
+        let getKanap = [{id: idProduct,
+            color: recupColors,
+            quantity: recupQuantity
+        }];
         let jsonKanap = JSON.stringify(getKanap);
         window.localStorage.setItem("arKanap", jsonKanap);
+
     }else{
         let parseKanap = JSON.parse(arKanap);
-        parseKanap.push(id, recupColors, recupQuantity, recupPrice);
+        parseKanap.push(id, recupColors, recupQuantity);
         let jsonParsKanap = JSON.stringify(parseKanap);
         localStorage.setItem("arKanap", jsonParsKanap);
     }
+
+
+    })
+    // if(recupColors === "" || recupQuantity === "0"){
+    //     localStorage.removeItem("arKanap");
+    // }
     // localStorage.clear();
-    // console.log(localStorage);
+    console.log(localStorage);
 }
 addKanap()
