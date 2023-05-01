@@ -1,7 +1,6 @@
 // récuperer l'id du canaper selectionner
 let params = new URLSearchParams(document.location.search);
 let id = params.get ("id");
-// console.log(id);
 
 async function displayKanap(){
     await fetch("http://localhost:3000/api/products/"+ id) // intégrer l'id du canaper selectionner dans le fetch "+ id"
@@ -40,41 +39,97 @@ async function displayKanap(){
 }
 displayKanap() //permet le bon fonctionnement de la function
 
+function colorValue() {
+    let color = document.querySelector(`#colors`);
+    return color.value;
+};
 
+function qtyValue() {
+    let qty =  document.querySelector(`#quantity`);
+    return qty.value;
+};
 
-function addKanap(){ //Ajoute mes choix (couleur quantiter et prix) dans le localstorage
+function kanapStorage(){
+    const addElement = (id, color, qty) => {
 
-    let addCart = document.getElementById("addToCart");
-    addCart.addEventListener ("click", function(event){
-        event.preventDefault();
+        if (color =="" && qty == "0") {
+            return alert(`Choisissez une couleur et une quantité.`);
+        }
 
-    const recupColors = document.getElementById("colors").value; 
-    const recupQuantity = document.getElementById("quantity").value;
-    const idProduct = id;
-    
-    let arKanap = localStorage.getItem("arKanap");
-    if (arKanap === null){
-        // let getKanap = [id, recupColors, recupQuantity, recupPrice];
-        let getKanap = [{id: idProduct,
-            color: recupColors,
-            quantity: recupQuantity
-        }];
-        let jsonKanap = JSON.stringify(getKanap);
-        window.localStorage.setItem("arKanap", jsonKanap);
+        if (color == "") {
+            return alert(`Choisissez une couleur.`);
+        }
 
-    }else{
-        let parseKanap = JSON.parse(arKanap);
-        parseKanap.push(id, recupColors, recupQuantity);
-        let jsonParsKanap = JSON.stringify(parseKanap);
-        localStorage.setItem("arKanap", jsonParsKanap);
+        if (qty <= 0 || qty >= 41)  {
+            return alert(`Choisissez une quantité.`);
+        }
+
+        let storageKanap = getCart();
+
+        if (storageKanap.length == 0) {
+            storageKanap = [{id: id, color: color, qty: qty}];
+        } else {
+            let storagExist = false;
+            for (let i = 0; i < storageKanap.length; i++) {
+                if (id === storageKanap[i].id && color === storageKanap[i].color) {
+                storagExist = true;
+                storageKanap[i].qty += qty;
+                }
+            }
+            if (storagExist == false) {
+                let obj = {id: id, color: color, qty: qty};
+                storageKanap.push(obj);
+            }
+        }
+        localStorage.setItem(`productChoisis`, JSON.stringify(storageKanap));
+        alert(`Votre choix a été ajouter au panier !`)
     }
 
-
-    })
-    // if(recupColors === "" || recupQuantity === "0"){
-    //     localStorage.removeItem("arKanap");
-    // }
-    // localStorage.clear();
-    console.log(localStorage);
+    const addCart = document.getElementById("addToCart");
+        addCart.addEventListener ("click", function(event){
+            let color = colorValue();
+            let qty = parseInt(qtyValue());
+            addElement(id, color, qty);
+        });
 }
-addKanap()
+kanapStorage()
+
+
+
+
+// function addKanap(){ //Ajoute mes choix (couleur quantiter et prix) dans le localstorage
+
+//     let addCart = document.getElementById("addToCart");
+//     addCart.addEventListener ("click", function(event){
+//         event.preventDefault();
+
+//     const recupColors = document.getElementById("colors").value; 
+//     const recupQuantity = document.getElementById("quantity").value;
+//     const idProduct = id;
+    
+//     let arKanap = localStorage.getItem("arKanap");
+//     if (arKanap === null){
+//         // let getKanap = [id, recupColors, recupQuantity, recupPrice];
+//         let getKanap = [{id: idProduct,
+//             color: recupColors,
+//             quantity: recupQuantity
+//         }];
+//         let jsonKanap = JSON.stringify(getKanap);
+//         window.localStorage.setItem("arKanap", jsonKanap);
+
+//     }else{
+//         let parseKanap = JSON.parse(arKanap);
+//         parseKanap.push(id, recupColors, recupQuantity);
+//         let jsonParsKanap = JSON.stringify(parseKanap);
+//         localStorage.setItem("arKanap", jsonParsKanap);
+//     }
+
+
+//     })
+//     // if(recupColors === "" || recupQuantity === "0"){
+//     //     localStorage.removeItem("arKanap");
+//     // }
+//     // localStorage.clear();
+//     console.log(localStorage);
+// }
+// addKanap()
