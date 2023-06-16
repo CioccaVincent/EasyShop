@@ -37,10 +37,10 @@ async function recupProduct() {
                     <div class="cart__item__content__settings">
                         <div class="cart__item__content__settings__quantity">
                             <p>Qté : </p>
-                            <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="40" value="${arKanap.recupQuantity}">
+                            <input type="number" class="itemQuantity" name="itemQuantity" onchange="addQty('${id}', '${color}', '${data.price}', this.value)" min="1" max="40" value="${storageKanap[i].qty}">
                         </div>
                         <div class="cart__item__content__settings__delete">
-                            <p class="deleteItem" onclick="deleteItem('${id}', '${color}', '${data.price}')">Supprimer</p>
+                            <p class="deleteKanap" onclick="deleteKanap('${id}', '${color}', '${data.price}')">Supprimer</p>
                         </div>
                     </div>
                 </div>
@@ -61,10 +61,8 @@ async function recupProduct() {
         document.querySelector('#totalQuantity').innerText = `0`;
         document.querySelector('#totalPrice').innerText = `0`;
     }
-}
-recupProduct()
 
-function addQty(){
+
     const addQty = (id, color, price, newQty) => {
         let storageKanap = getCart();
         let item = storageKanap.find(
@@ -76,9 +74,9 @@ function addQty(){
         let newQuantity = parseInt(newQty);
 
         item.qty = newQuantity;
-    localStorage.setItem(`selectedProduct`, JSON.stringify(storageKanap));
+        localStorage.setItem(`selectedProduct`, JSON.stringify(storageKanap));
     
-    if (newQty <= 0 || newQty >= 101) {
+    if (newQty <= 0 || newQty >= 40) {
         alert(`Votre choix doit être comprise entre 1 et 40 !`)
     }
 
@@ -93,11 +91,10 @@ function addQty(){
     let totalPriceAfter = totalPriceBefore - (priceItem * previousQty) + (priceItem * newQuantity);
     
     document.querySelector(`totalPrice`).innerHTML = totalPriceAfter;
-    }
 }
-addQty()
 
-function deleteKanap() {
+
+
     const deleteKanap = (id, color, price) => {
         let storageKanap = getCart();
         for (i = 0; i < storageKanap.length; i++) {
@@ -129,7 +126,7 @@ function deleteKanap() {
         }
     }
 }
-deleteKanap()
+recupProduct()
 
 // recuperer les donner stoker dans le localStorage pour les afficher dans le panier
 // function getKanap() {

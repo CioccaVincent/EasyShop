@@ -49,7 +49,7 @@ function qtyValue() {
     return qty.value;
 };
 
-function kanapStorage(){
+
     const addElement = (id, color, qty) => {
 
         if (color =="" && qty == "0") {
@@ -85,14 +85,14 @@ function kanapStorage(){
         alert(`Votre choix a été ajouter au panier !`)
     }
 
-    const addCart = document.getElementById("addToCart");
-        addCart.addEventListener ("click", function(event){
-            let color = colorValue();
-            let qty = parseInt(qtyValue());
-            addElement(id, color, qty);
-        });
-}
-kanapStorage()
+const addCart = document.getElementById("addToCart");
+    addCart.addEventListener ("click", function(event){
+        let color = colorValue();
+        let qty = parseInt(qtyValue());
+        addElement(id, color, qty);
+    });
+
+
 
 
 
